@@ -4,21 +4,21 @@ class Frac:
         denominator = _to_ratio(denominator)
         self._denominator *= denominator[0] # (a / b) / (c / d) = ad / bc
         self._numerator *= denominator[1]
-        self.simplify()
+        self._simplify()
 
     def set_numerator(self, numerator):
         numerator = _to_ratio(numerator)
         self.numerator = numerator[0]
         self._denominator *= numerator[1]
-        self.simplify()
+        self._simplify()
 
     def set_denominator(self, denominator):
         denominator = _to_ratio(denominator)
         self._denominator = denominator[0]
         self._numerator *= denominator[1]
-        self.simplify()
+        self._simplify()
     
-    def simplify(self):
+    def _simplify(self):
         if self._denominator == 0:
             if self._numerator < 0:
                 self._numerator = -1
@@ -339,10 +339,8 @@ def _to_ratio(input): # turns input into unsimplified ratio
     if inputType is Frac:
         return input._numerator, input._denominator
     if inputType is list or inputType is tuple:
-        if len(input) == 1:
-            return input[0], 1
+        if len(input) != 2:
+            raise ValueError('length of list or tuple should be 2')
         if len(input) >= 2:
             return input[0], input[1]
-    return 0, 0
-
-print(Frac('324fw'))
+    raise TypeError(f'expected int, float, str, Frac, list, or tuple but received {type(input)}')
