@@ -41,6 +41,9 @@ class Frac:
         self._numerator //= a # divide gcd from both
         self._denominator //= a
     
+    def __hash__(self):
+        return hash((self._numerator, self._denominator))
+    
     def __round__(self, digits=0):
         if not isinstance(digits, int):
             raise TypeError(f'expected int but recieved {type(digits)}')
