@@ -42,7 +42,7 @@ class Frac:
         self._denominator //= a
     
     def __hash__(self):
-        return hash((self._numerator, self._denominator))
+        return hash(float(self))
     
     def __round__(self, digits=0):
         if not isinstance(digits, int):
@@ -341,9 +341,10 @@ def _to_ratio(input): # turns input into unsimplified ratio
         return numerator * sign, denominator
     if inputType is Frac:
         return input._numerator, input._denominator
-    if inputType is list or inputType is tuple:
-        if len(input) != 2:
-            raise ValueError('length of list or tuple should be 2')
-        if len(input) >= 2:
-            return input[0], input[1]
-    raise TypeError(f'expected int, float, str, Frac, list, or tuple but received {type(input)}')
+    raise TypeError(f'expected int, float, str, Frac, list, or tuple but received {inputType}')
+
+s = set()
+s.add(1.0)
+s.add(1)
+s.add(Frac(1, 1) + "0.12543154325435")
+print(s)
